@@ -8,10 +8,11 @@ using System;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
+    [SerializeField] protected Inventory _inventory;
     [SerializeField] protected List<Item_ScriptableObject> _items_SO = new List<Item_ScriptableObject>();
 
-    public Transform itemContent;
-    public GameObject inventoryItem;
+    [SerializeField] protected Transform _itemContent;
+    [SerializeField] protected GameObject _prefabInventoryItemUI;
 
     private void Awake()
     {
@@ -30,13 +31,13 @@ public class Inventory : MonoBehaviour
 
     public void ListItems()
     {
-        foreach (Transform item in itemContent)
+        foreach (Transform item in _itemContent)
         {
             Destroy(item.gameObject);
         }
         foreach (Item_ScriptableObject item in _items_SO)
         {
-            GameObject gO = Instantiate(inventoryItem, itemContent);
+            GameObject gO = Instantiate(_prefabInventoryItemUI, _itemContent);
             var itemSprite = gO.transform.Find("SpriteItem").GetComponent<Image>();
             var itemPrice = gO.transform.Find("PriceItem").GetComponent<TextMeshProUGUI>();
             var itemName = gO.transform.Find("NameItem").GetComponent<TextMeshProUGUI>();
@@ -46,5 +47,10 @@ public class Inventory : MonoBehaviour
             itemPrice.text = item.itemPrice.ToString();
 
         }
+    }
+
+    public List<Item_ScriptableObject>  GetLengthInventory
+    {
+        get { return _items_SO; }
     }
 }

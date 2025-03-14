@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected Animator _animator;
     [SerializeField] protected Inventory _inventory;
     [SerializeField] protected GameManager _gameManager;
-    [SerializeField] protected Item_ScriptableObject _item_SO;
+    public Store store;
 
     [Header("MOVEMENT")]
     [SerializeField] protected float _speed = 5f;
@@ -130,6 +130,7 @@ public class PlayerController : MonoBehaviour
         {
             _gameManager.ToggleInventoryPanel();
             _inventory.ListItems();
+            store.ListItemsOnInventoryShop();
         }
     }
 
@@ -229,11 +230,13 @@ public class PlayerController : MonoBehaviour
 
     private void IdleState()
     {
+
         Debug.Log(_statesPlayer.ToString());
     }
 
     private void WalkState()
     {
+        
         //float velX = _rb.linearVelocityX;
         //_animator.speed = Mathf.Abs(input) < .1f / _speed;
         Debug.Log(_statesPlayer.ToString());
@@ -255,6 +258,7 @@ public class PlayerController : MonoBehaviour
 
     private void ShieldState()
     {
+
         ToggleShield();
         if (!shieldActive)
         {

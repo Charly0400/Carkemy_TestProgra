@@ -12,6 +12,4 @@ public class Item_ScriptableObject : ScriptableObject
     [Header("PRICE")]
     public int itemPrice;
 
-    [Header("SALE /BUY")]
-    public bool sale_or_buy;
 }

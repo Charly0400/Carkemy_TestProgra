@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 1164668138806796834}
   - component: {fileID: 2559479061997528534}
   - component: {fileID: 1892442680165838562}
+  - component: {fileID: 3100853524080012298}
   m_Layer: 5
   m_Name: Skins
   m_TagString: Untagged
@@ -431,6 +432,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
+--- !u!114 &3100853524080012298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458441136732577656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee7048a20602924bbcc771ebe60c8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _priceItem: {fileID: 625385376729918849}
+  _nameItem: {fileID: 5899661437720478936}
+  _spriteItem: {fileID: 5212009212648611501}
+  _button: {fileID: 6000826672198430101}
+  _skin_SO: {fileID: 0}
 --- !u!1 &7030180082415128505
 GameObject:
   m_ObjectHideFlags: 0
