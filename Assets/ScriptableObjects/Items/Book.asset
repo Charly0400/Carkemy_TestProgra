@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Boots
   itmeSprite: {fileID: -6974004680605758000, guid: 2547b57f83b594e408f6f2f3f6a5e8b5, type: 3}
   itemPrice: 400
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 56bccb739c363654da68a3d1bd9ab7da, type: 3}

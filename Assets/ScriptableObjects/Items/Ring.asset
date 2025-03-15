@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Blue Ring
   itmeSprite: {fileID: -9135005010472271513, guid: 7c41ac17a824ee7478cc7f6730a37705, type: 3}
   itemPrice: 200
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 1bd21cb906c689b41ad9bd8e8c6adeca, type: 3}

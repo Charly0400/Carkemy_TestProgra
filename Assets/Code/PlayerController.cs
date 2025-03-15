@@ -83,14 +83,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-       GroundCheck();
+        GroundCheck();
     }
 
     #endregion
 
     #region Public Methods
 
-        #region Player Input Systen
+    #region Player Input Systen
 
     public void Move(InputAction.CallbackContext callback)
     {
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
     public void Shield(InputAction.CallbackContext callback)
     {
-        if (callback.performed )
+        if (callback.performed)
         {
             SetStateForPlayer(StatesPlayer.SHIELD);
         }
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
         }
         else
             SetStateForPlayer(StatesPlayer.JUMP);
-     
+
     }
 
     protected void SetStateForPlayer(StatesPlayer statesPlayer)
@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
         }
-    } 
+    }
 
     #endregion
 
@@ -239,18 +239,16 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer);
     }
 
-        #region states Methods
+    #region states Methods
 
     private void IdleState()
     {
         _animator.Play("Idle_Original");
-        Debug.Log(_statesPlayer.ToString());
     }
 
     private void WalkState()
     {
-        _animator.Play("walk_original");
-        Debug.Log(_statesPlayer.ToString());
+        _animator.PlayInFixedTime("walk_original", 0);
     }
 
     private void JumpState()
@@ -258,18 +256,15 @@ public class PlayerController : MonoBehaviour
         float time = Map(_rb.linearVelocityY, jumpForce, -jumpForce, 0, 1, true);
         _animator.speed = 0;
         _animator.Play("Jump_Original", 0, time);
-        Debug.Log(_statesPlayer.ToString());
     }
-    
+
     private void DashState()
     {
         StartCoroutine(Dash());
-        Debug.Log(_statesPlayer.ToString());
     }
 
     private void ShieldState()
     {
-        _animator.Play("ShieldOriginal");
         ToggleShield();
         if (!_isShieldActive)
         {
@@ -281,13 +276,11 @@ public class PlayerController : MonoBehaviour
     private void AttackState()
     {
         _animator.Play("Origin_Attack");
-        Debug.Log(_statesPlayer.ToString());
         StartCoroutine(EndAttack());
     }
 
     private void DeathState()
     {
-        Debug.Log(_statesPlayer.ToString());
     }
 
     #endregion
@@ -295,7 +288,7 @@ public class PlayerController : MonoBehaviour
     {
         ToggleAttackBox();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(.5f);
 
         ToggleAttackBox();
 

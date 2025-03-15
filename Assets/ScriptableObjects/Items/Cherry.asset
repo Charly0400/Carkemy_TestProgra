@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Cherry
   itmeSprite: {fileID: -4017847564887189802, guid: 5dcdd8e4c77019148a4b9f0326783b76, type: 3}
   itemPrice: 30
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 91ce2428427a46647b03736ceaaa1232, type: 3}

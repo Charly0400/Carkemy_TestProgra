@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Necklace
   itmeSprite: {fileID: 8939200488141112871, guid: 5d538d2ed382ad0409db9097c62668db, type: 3}
   itemPrice: 350
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 3cffdfbbf5240194c8e72c4feb5e26bd, type: 3}

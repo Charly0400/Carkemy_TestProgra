@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Map
   itmeSprite: {fileID: 4373892534832241680, guid: 5e038fcb160eab54b876afde0f090766, type: 3}
   itemPrice: 300
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 794c4c7930f8e1e4ea75f8b51d309d6e, type: 3}

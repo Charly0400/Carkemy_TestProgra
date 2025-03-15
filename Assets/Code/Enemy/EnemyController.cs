@@ -45,10 +45,7 @@ public class GenericEnemy : MonoBehaviour
                 transform.localScale = new Vector3(1, 1, 1);
 
             // Reproduce la animación de caminar
-            if (animator != null)
-            {
-                animator.Play("Walk");
-            }
+
         }
     }
 
@@ -72,7 +69,7 @@ public class GenericEnemy : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         DropRandomItem();
         // Permite que se reproduzca la animación de muerte (por ejemplo, 1 segundo)
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 1);
     }
 
     // Selecciona un ítem aleatorio de la lista de drops y lo instancia en la posición del enemigo
@@ -93,6 +90,14 @@ public class GenericEnemy : MonoBehaviour
             {
                 Debug.LogWarning("No se encontró un prefab de drop en el ScriptableObject: " + itemToDrop.itemName);
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            TakeDamage(3);
         }
     }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Purple_Skin
   skinSprite: {fileID: 6977262223903212475, guid: b293650b49cc3744abd413d549ef18c1, type: 3}
-  skinPrice: 60
+  skinPrice: 1000
   animatorOverrideController: {fileID: 22100000, guid: 2e0f0db0e466ee94aa0b4d35a8f25a0d, type: 2}

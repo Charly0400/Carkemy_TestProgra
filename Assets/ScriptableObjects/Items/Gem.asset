@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Gem
   itmeSprite: {fileID: 6395225395225038985, guid: be0ee51ab10930b4dad881a63c84a8a6, type: 3}
   itemPrice: 500
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: 440b18444c3dca24ea39adab6c7c658d, type: 3}

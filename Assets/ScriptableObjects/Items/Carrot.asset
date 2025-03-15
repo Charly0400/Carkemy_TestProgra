@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Carrot
   itmeSprite: {fileID: -4732140390943650613, guid: 07a0c99fe30222c44b83597b84dc5349, type: 3}
   itemPrice: 15
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 8283586548140268546, guid: ed484b860c0777d43bb83d479385ce5d, type: 3}

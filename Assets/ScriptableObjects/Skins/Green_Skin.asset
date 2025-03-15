@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Green_Skin
   skinSprite: {fileID: -8537226711237687113, guid: 645a601a7b4606942b66c3e2ae58f69f, type: 3}
-  skinPrice: 30
+  skinPrice: 250
   animatorOverrideController: {fileID: 22100000, guid: dc7f7f9037d1de14ca1103289866e767, type: 2}
