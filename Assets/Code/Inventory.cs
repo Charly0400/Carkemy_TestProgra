@@ -8,7 +8,7 @@ using System;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
-    [SerializeField] protected Inventory _inventory;
+
     [SerializeField] protected List<Item_ScriptableObject> _items_SO = new List<Item_ScriptableObject>();
 
     [SerializeField] protected Transform _itemContent;

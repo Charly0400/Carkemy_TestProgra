@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
         _inventory = GetComponent<Inventory>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -130,7 +131,6 @@ public class PlayerController : MonoBehaviour
         {
             _gameManager.ToggleInventoryPanel();
             _inventory.ListItems();
-            store.ListItemsOnInventoryShop();
         }
     }
 
@@ -230,23 +230,22 @@ public class PlayerController : MonoBehaviour
 
     private void IdleState()
     {
-
+        _animator.Play("Idle_Original");
         Debug.Log(_statesPlayer.ToString());
     }
 
     private void WalkState()
     {
-        
-        //float velX = _rb.linearVelocityX;
-        //_animator.speed = Mathf.Abs(input) < .1f / _speed;
+
+        _animator.Play("walk_original");
         Debug.Log(_statesPlayer.ToString());
     }
 
     private void JumpState()
     {
-        //float time = Map(_rb.linearVelocityY, jumpForce, -jumpForce, 0, 1, true);
-        //_animator.Play("Jump", 0, time);
-        //_animator.speed = 0;
+        float time = Map(_rb.linearVelocityY, jumpForce, -jumpForce, 0, 1, true);
+        _animator.speed = 0;
+        _animator.Play("Jump_Original", 0, time);
         Debug.Log(_statesPlayer.ToString());
     }
     
@@ -258,7 +257,7 @@ public class PlayerController : MonoBehaviour
 
     private void ShieldState()
     {
-
+        _animator.Play("ShieldOriginal");
         ToggleShield();
         if (!shieldActive)
         {
@@ -276,8 +275,16 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(_statesPlayer.ToString());
     }
-    
-        #endregion 
+
+    #endregion
+
+    public static float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget, bool clamp = false)
+    {
+        float t = (value - fromSource) / (toSource - fromSource);
+        if (clamp)
+            t = Mathf.Clamp01(t);
+        return Mathf.Lerp(fromTarget, toTarget, t);
+    }
 
     #endregion
 

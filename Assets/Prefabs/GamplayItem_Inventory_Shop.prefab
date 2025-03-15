@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 551630429064834204}
   - component: {fileID: 8123063122092634769}
   - component: {fileID: 1238920081176463817}
-  - component: {fileID: 6001986910649835098}
+  - component: {fileID: 7737390925037825173}
   m_Layer: 5
   m_Name: GamplayItem_Inventory_Shop
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6001986910649835098
+--- !u!114 &7737390925037825173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   _nameItem: {fileID: 1400806164382974823}
   _priceItem: {fileID: 2754792197690171940}
   _button: {fileID: 6113439559450042133}
-  _item_SO: {fileID: 0}
+  _item_SO: {fileID: 11400000, guid: 91ae41325c71b504c93bf415088e2e55, type: 2}
 --- !u!1 &5248077812929242566
 GameObject:
   m_ObjectHideFlags: 0

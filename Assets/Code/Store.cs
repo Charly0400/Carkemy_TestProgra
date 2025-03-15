@@ -14,6 +14,7 @@ public class Store : MonoBehaviour
 
     [SerializeField] protected Transform _SkinShopConteiner;
     [SerializeField] protected List<GameObject> _prefabSkinShopItemUI;
+    [SerializeField] protected GameManager _gameManager;
 
     private void Awake()
     {
@@ -80,22 +81,38 @@ public class Store : MonoBehaviour
         ListItemsOnInventoryShop();
     }
 
-    public void BuyItem(Skin_ScriptableObject skin, ShopSkinStore shopSkinStore)
+    public void BuyItem(Skin_ScriptableObject skin, ShopSkinStore shopSkinUI)
     {
         if (_currencyManager.CanAfford(skin.skinPrice))
         {
             _currencyManager.SpendCoins(skin.skinPrice);
 
-            shopSkinStore.GetEquipButton.gameObject.SetActive(true);
+            shopSkinUI.GetPriceButton.gameObject.SetActive(false);
+            shopSkinUI.GetEquipButton.gameObject.SetActive(true);
             Debug.Log("Skin comprada: " + skin.skinName);
-            shopSkinStore.GetPriceButton.gameObject.SetActive(false);
-
             // Podrías, por ejemplo, desactivar el botón:
             // shopSkinUI.DisableBuyButton(); // método que podrías implementar en ShopSkinStore
         }
         else
         {
             Debug.Log("No tienes suficientes monedas para comprar: " + skin.skinName);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ListItemsOnInventoryShop();
+            _gameManager.ToggleShopPanel();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _gameManager.ToggleShopPanel();
         }
     }
 }

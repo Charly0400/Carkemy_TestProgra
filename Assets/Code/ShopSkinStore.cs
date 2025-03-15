@@ -30,7 +30,7 @@ public class ShopSkinStore : MonoBehaviour
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(OnBuyButton);
         }
-        // Configura el botón de equipamiento (inicialmente inactivo si no se ha comprado)
+
         if (_buttonEquip != null)
         {
             _buttonEquip.onClick.RemoveAllListeners();
@@ -45,7 +45,8 @@ public class ShopSkinStore : MonoBehaviour
 
     public void OnEquipButton()
     {
-        Skin_Manager.Instance.EquipSkin(GetSkisSO);
+
+        Skin_Manager.Instance.EquipSkin(_skin_SO);
     }
 
     public Skin_ScriptableObject GetSkisSO
