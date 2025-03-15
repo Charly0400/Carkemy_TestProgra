@@ -1,9 +1,13 @@
-using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
+using TMPro;
 
+//Gestiona la visualización y venta de ítems en la tienda
 public class ShopItemStore : MonoBehaviour
 {
+    #region Variables
+
+    [Header("REFERENCES")]
     [SerializeField] protected Image _spriteItem;
     [SerializeField] protected TextMeshProUGUI _nameItem;
     [SerializeField] protected TextMeshProUGUI _priceItem;
@@ -11,7 +15,11 @@ public class ShopItemStore : MonoBehaviour
 
     [SerializeField] protected Item_ScriptableObject _item_SO;
 
-    // Inicializa el prefab con el ScriptableObject del ítem
+    #endregion
+
+    #region Shop Items Methos
+
+    // Configura ek item de la UI
     public void Setup(Item_ScriptableObject newItem)
     {
         _item_SO = newItem;
@@ -31,8 +39,12 @@ public class ShopItemStore : MonoBehaviour
             _button.onClick.AddListener(OnSellButton);
         }  
     }
+
+    //Gestiona la venta del item
     public void OnSellButton()
     {
         Store.Instance.SellItem(_item_SO);
     }
+
+    #endregion
 }

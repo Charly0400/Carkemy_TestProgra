@@ -4,7 +4,7 @@ using System.Collections;
 using System;
 using System.Xml.Serialization;
 
-
+#region Enums
 public enum StatesPlayer
 {
     JUMP,
@@ -16,6 +16,9 @@ public enum StatesPlayer
     DEATH
 }
 
+#endregion
+
+//Sistema general del movimiento del personaje
 public class PlayerController : MonoBehaviour
 {
     #region Variables
@@ -88,15 +91,14 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region Public Methods
-
-    #region Player Input Systen
+    #region Public Methods Input System
 
     public void Move(InputAction.CallbackContext callback)
     {
         input = callback.ReadValue<Vector2>().x;
     }
 
+    //Manejo gradual y completo del salto con animación
     public void Jump(InputAction.CallbackContext callback)
     {
 
@@ -145,6 +147,9 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Private Methods
+
+    //Actualiza el estado del jugador
     protected void UpdateStateOfPlayer()
     {
 
@@ -165,6 +170,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //Establece la lógica del jugador
     protected void SetStateForPlayer(StatesPlayer statesPlayer)
     {
         _statesPlayer = statesPlayer;
@@ -196,10 +202,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #endregion
+    #region PLayer Moevement Methods
 
-    #region Private Methods
+    //Activa y desactiva eñ escudo
+    private void ToggleShield()
+    {
+        _isShieldActive = !_isShieldActive;
+        shield.SetActive(_isShieldActive);
+    }
+    //Activa y desactiva eñ escudo
+    private void ToggleAttackBox()
+    {
+        isBoxActive = !isBoxActive;
+        _boxAttack.SetActive(isBoxActive);
+    }
 
+    //Voltea el sprite del personajes
+    private void Flip()
+    {
+        _isFacingRight = !_isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
+
+    //Verifica si está saltando
+    private void GroundCheck()
+    {
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer);
+    }
+    private IEnumerator EndAttack()
+    {
+        ToggleAttackBox();
+
+        yield return new WaitForSeconds(.5f);
+
+        ToggleAttackBox();
+
+        SetStateForPlayer(isGrounded ? (input == 0 ? StatesPlayer.IDLE : StatesPlayer.WALK) : StatesPlayer.JUMP);
+    }
+
+    //Corrutina para manejar el dash
     private IEnumerator Dash()
     {
         _canDash = false;
@@ -214,30 +257,7 @@ public class PlayerController : MonoBehaviour
         SetStateForPlayer(isGrounded ? (input == 0 ? StatesPlayer.IDLE : StatesPlayer.WALK) : StatesPlayer.JUMP);
     }
 
-    private void ToggleShield()
-    {
-        _isShieldActive = !_isShieldActive;
-        shield.SetActive(_isShieldActive);
-    }
-
-    private void ToggleAttackBox()
-    {
-        isBoxActive = !isBoxActive;
-        _boxAttack.SetActive(isBoxActive);
-    }
-
-    private void Flip()
-    {
-        _isFacingRight = !_isFacingRight;
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1f;
-        transform.localScale = localScale;
-    }
-
-    private void GroundCheck()
-    {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer);
-    }
+    #endregion
 
     #region states Methods
 
@@ -284,16 +304,8 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-    private IEnumerator EndAttack()
-    {
-        ToggleAttackBox();
 
-        yield return new WaitForSeconds(.5f);
-
-        ToggleAttackBox();
-
-        SetStateForPlayer(isGrounded ? (input == 0 ? StatesPlayer.IDLE : StatesPlayer.WALK) : StatesPlayer.JUMP);
-    }
+    //Metodo para mapear el valor de un rango a otro
     public static float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget, bool clamp = false)
     {
         float t = (value - fromSource) / (toSource - fromSource);

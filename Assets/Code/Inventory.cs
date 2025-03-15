@@ -1,34 +1,47 @@
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System;
+
+//Gestiona el inventario del jugador
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory Instance;
+    #region Variables
 
+    [Header("LIST OF ITEMS")]
     [SerializeField] protected List<Item_ScriptableObject> _items_SO = new List<Item_ScriptableObject>();
 
+    [Header("INVENTORY UI")]
     [SerializeField] protected Transform _itemContent;
     [SerializeField] protected GameObject _prefabInventoryItemUI;
+
+    public static Inventory Instance;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Awake()
     {
         Instance = this;
     }
 
+    #endregion
+
+    #region Inventory Methods
+    //Agrega Items al inventario
     public void Add(Item_ScriptableObject item)
     {
         _items_SO.Add(item);
     }
-
+    //Remueve Items del inventario
     public void Remove(Item_ScriptableObject item)
     {
         _items_SO.Remove(item);
     }
 
+    //Lista los intems en la UI del inventario
     public void ListItems()
     {
         foreach (Transform item in _itemContent)
@@ -49,8 +62,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Getter
+
     public List<Item_ScriptableObject>  GetLengthInventory
     {
         get { return _items_SO; }
     }
+
+    #endregion
 }

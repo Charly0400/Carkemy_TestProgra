@@ -1,35 +1,76 @@
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
-using Unity.VisualScripting;
 
 public class Store : MonoBehaviour
 {
+    #region Variables
+
+    [Header ("REFERENCES")]
+    [SerializeField] protected CurrencyManager _currencyManager;
+    [SerializeField] protected GameManager _gameManager;
+
+    [Header ("INVENTORY ITEMS")]    
     [SerializeField] protected List<Item_ScriptableObject> _items_SO = new List<Item_ScriptableObject>();
-    public static Store Instance;
+    
+    [Header ("INVENTORY CONTEINER SHOP UI")]    
     [SerializeField] protected Transform _inventoryShopConteiner;
     [SerializeField] protected GameObject _prefabInventoryShopItemUI;
-    [SerializeField] protected CurrencyManager _currencyManager;
 
+    [Header ("SHOP CONTEINER UI")]    
     [SerializeField] protected Transform _SkinShopConteiner;
     [SerializeField] protected List<GameObject> _prefabSkinShopItemUI;
-    [SerializeField] protected GameManager _gameManager;
+
+    public static Store Instance;
+    #endregion
+
+    #region Unity Methods
 
     private void Awake()
     {
         Instance = this;
-        SetSkins();
+        SetSkins();  // Inicializa las skins disponibles en la tienda
     }
+
+    #region Player Detection
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ListItemsOnInventoryShop();
+            _gameManager.ToggleShopPanel();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _gameManager.ToggleShopPanel();
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Inventory Methods
+
+    //Agrega Items a la tienda
     public void Add(Item_ScriptableObject item)
     {
         _items_SO.Add(item);
     }
 
+    //Remueve Items a la tienda
     public void Remove(Item_ScriptableObject item)
     {
         _items_SO.Remove(item);
     }
+
+    #endregion
+
+    #region ShopItemStore Methods
     public void ListItemsOnInventoryShop()
     {
         // Destruye los items previos en la UI de la tienda
@@ -50,7 +91,7 @@ public class Store : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("El prefab no tiene asignado el componente ShopItemUI.");
+                Debug.LogWarning("El prefab no tiene asignado el componente ShopItemStore.");
             }
         }
     }
@@ -72,6 +113,7 @@ public class Store : MonoBehaviour
         }
     }
 
+    //Vende items, actualiza monedas y lo elimina del inventoario
     public void SellItem(Item_ScriptableObject item)
     {
         Inventory.Instance.Remove(item);
@@ -81,6 +123,7 @@ public class Store : MonoBehaviour
         ListItemsOnInventoryShop();
     }
 
+    //Metodo de compra 
     public void BuyItem(Skin_ScriptableObject skin, ShopSkinStore shopSkinUI)
     {
         if (_currencyManager.CanAfford(skin.skinPrice))
@@ -90,8 +133,6 @@ public class Store : MonoBehaviour
             shopSkinUI.GetPriceButton.gameObject.SetActive(false);
             shopSkinUI.GetEquipButton.gameObject.SetActive(true);
             Debug.Log("Skin comprada: " + skin.skinName);
-            // Podrías, por ejemplo, desactivar el botón:
-            // shopSkinUI.DisableBuyButton(); // método que podrías implementar en ShopSkinStore
         }
         else
         {
@@ -99,20 +140,6 @@ public class Store : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            ListItemsOnInventoryShop();
-            _gameManager.ToggleShopPanel();
-        }
-    }
+    #endregion
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            _gameManager.ToggleShopPanel();
-        }
-    }
 }

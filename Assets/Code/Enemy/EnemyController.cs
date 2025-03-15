@@ -1,23 +1,31 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
+//Moviemnto del enemy
 public class GenericEnemy : MonoBehaviour
 {
-    [Header("Movement")]
-    public float followSpeed = 3f;
-    public Transform player; // Asigna el transform del jugador o se buscará por tag "Player"
 
-    [Header("Health")]
-    public int health = 3;
+    #region Variables
 
-    [Header("Drops")]
-    [Tooltip("Lista de ScriptableObjects de ítems que se pueden soltar al morir.")]
-    public List<Item_ScriptableObject> dropItems;
+    [Header("MOVEMENT")]
+    [SerializeField] protected float followSpeed = 3f;
+    [SerializeField] protected Transform player; 
 
-    [Header("Animations")]
-    public Animator animator; // Asigna el Animator del enemigo
+    [Header("HEALTH")]
+    [SerializeField] protected int health = 3;
 
-    private Rigidbody2D rb;
+    [Header("DROPS")]
+    [SerializeField]  protected List<Item_ScriptableObject> dropItems;
+
+    [Header("ANIMATION")]
+    [SerializeField] protected Animator animator;
+
+    [Header("REFERENCES")]
+    [SerializeField] protected Rigidbody2D rb;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Start()
     {
@@ -31,7 +39,7 @@ public class GenericEnemy : MonoBehaviour
     }
 
     private void Update()
-    {
+    { 
         if (player != null)
         {
             // Calcula la dirección hacia el jugador y mueve al enemigo
@@ -43,12 +51,12 @@ public class GenericEnemy : MonoBehaviour
                 transform.localScale = new Vector3(-1, 1, 1);
             else if (direction.x > 0)
                 transform.localScale = new Vector3(1, 1, 1);
-
-            // Reproduce la animación de caminar
-
         }
     }
 
+    #endregion
+
+    #region Private Methods
     // Método para recibir daño
     public void TakeDamage(int damage)
     {
@@ -68,7 +76,6 @@ public class GenericEnemy : MonoBehaviour
         }
         rb.linearVelocity = Vector2.zero;
         DropRandomItem();
-        // Permite que se reproduzca la animación de muerte (por ejemplo, 1 segundo)
         Destroy(gameObject, 1);
     }
 
@@ -82,8 +89,6 @@ public class GenericEnemy : MonoBehaviour
 
             if (itemToDrop != null && itemToDrop.dropPrefab != null)
             {
-                // Instancia el prefab del objeto drop.
-                // Opcional: si tienes una zona de recogida, puedes asignar su transform como padre.
                 Instantiate(itemToDrop.dropPrefab, transform.position, Quaternion.identity);
             }
             else
@@ -93,6 +98,10 @@ public class GenericEnemy : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Colision
+    //Gestiona el daño provocado por el jugador
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Damage"))
@@ -100,4 +109,6 @@ public class GenericEnemy : MonoBehaviour
             TakeDamage(3);
         }
     }
+
+    #endregion
 }
