@@ -1,8 +1,16 @@
+using TMPro;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
     [SerializeField] protected int coins = 100;
+
+    [SerializeField] protected TextMeshProUGUI _moneyText;
+
+    private void Update()
+    {
+        _moneyText.text = coins.ToString();    
+    }
 
     public bool CanAfford(int amount)
     {

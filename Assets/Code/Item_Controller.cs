@@ -3,7 +3,6 @@ using UnityEngine;
 public class Item_Controller : MonoBehaviour
 {
     [SerializeField] protected Item_ScriptableObject _items_SO;
-    [SerializeField] protected Inventory _inventory;
 
     protected void PickUp()
     {
@@ -16,7 +15,7 @@ public class Item_Controller : MonoBehaviour
     {
         if (_items_SO != null && collision.gameObject.CompareTag("Player"))
         {
-            if(_inventory.GetLengthInventory.Count <= 14)
+            if(Inventory.Instance.GetLengthInventory.Count <= 14)
                 PickUp();
         }
     }

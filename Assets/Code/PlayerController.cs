@@ -22,8 +22,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("STATES")]
     [SerializeField] StatesPlayer _statesPlayer;
-    //[SerializeField] protected bool _isStateComplete;
-
 
     [Header("REFERENCES")]
     [SerializeField] protected Rigidbody2D _rb;
@@ -48,7 +46,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("SHIELD")]
     [SerializeField] protected GameObject shield;
-    [SerializeField] protected bool shieldActive;
+    [SerializeField] protected bool _isShieldActive;
+
+    [Header("ATTACK")]
+    [SerializeField] protected GameObject _boxAttack;
+    [SerializeField] protected bool isBoxActive;
 
     [Header("FLIP")]
     [SerializeField] protected bool _isFacingRight = true;
@@ -133,6 +135,13 @@ public class PlayerController : MonoBehaviour
             _inventory.ListItems();
         }
     }
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (context.performed && _statesPlayer != StatesPlayer.ATTACK)
+        {
+            SetStateForPlayer(StatesPlayer.ATTACK);
+        }
+    }
 
     #endregion
 
@@ -146,8 +155,6 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        //_isStateComplete = false;
 
         if (isGrounded)
         {
@@ -209,8 +216,14 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleShield()
     {
-        shieldActive = !shieldActive;
-        shield.SetActive(shieldActive);
+        _isShieldActive = !_isShieldActive;
+        shield.SetActive(_isShieldActive);
+    }
+
+    private void ToggleAttackBox()
+    {
+        isBoxActive = !isBoxActive;
+        _boxAttack.SetActive(isBoxActive);
     }
 
     private void Flip()
@@ -236,7 +249,6 @@ public class PlayerController : MonoBehaviour
 
     private void WalkState()
     {
-
         _animator.Play("walk_original");
         Debug.Log(_statesPlayer.ToString());
     }
@@ -259,7 +271,7 @@ public class PlayerController : MonoBehaviour
     {
         _animator.Play("ShieldOriginal");
         ToggleShield();
-        if (!shieldActive)
+        if (!_isShieldActive)
         {
             SetStateForPlayer(isGrounded ? (input == 0 ? StatesPlayer.IDLE : StatesPlayer.WALK) : StatesPlayer.JUMP);
         }
@@ -268,7 +280,9 @@ public class PlayerController : MonoBehaviour
 
     private void AttackState()
     {
+        _animator.Play("Origin_Attack");
         Debug.Log(_statesPlayer.ToString());
+        StartCoroutine(EndAttack());
     }
 
     private void DeathState()
@@ -277,7 +291,16 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+    private IEnumerator EndAttack()
+    {
+        ToggleAttackBox();
 
+        yield return new WaitForSeconds(0.5f);
+
+        ToggleAttackBox();
+
+        SetStateForPlayer(isGrounded ? (input == 0 ? StatesPlayer.IDLE : StatesPlayer.WALK) : StatesPlayer.JUMP);
+    }
     public static float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget, bool clamp = false)
     {
         float t = (value - fromSource) / (toSource - fromSource);

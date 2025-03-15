@@ -5,11 +5,14 @@ public class Item_ScriptableObject : ScriptableObject
 {
     [Header("NAME")]
     public string itemName;
-        
+
     [Header("SPRITE")]
     public Sprite itmeSprite;
 
     [Header("PRICE")]
     public int itemPrice;
+
+    [Header("PREFAB")]
+    public GameObject dropPrefab;
 
 }
