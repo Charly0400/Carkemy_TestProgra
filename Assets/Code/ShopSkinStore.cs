@@ -8,6 +8,7 @@ public class ShopSkinStore : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI _nameItem;
     [SerializeField] protected Image _spriteItem;
     [SerializeField] protected Button _button;
+    [SerializeField] protected Button _buttonEquip;
 
     [SerializeField] protected Skin_ScriptableObject _skin_SO;
 
@@ -29,14 +30,37 @@ public class ShopSkinStore : MonoBehaviour
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(OnBuyButton);
         }
+        // Configura el botón de equipamiento (inicialmente inactivo si no se ha comprado)
+        if (_buttonEquip != null)
+        {
+            _buttonEquip.onClick.RemoveAllListeners();
+            _buttonEquip.onClick.AddListener(OnEquipButton);
+            _buttonEquip.gameObject.SetActive(false); // Se activa al comprar
+        }
     }
     public void OnBuyButton()
     {
-        Store.Instance.BuyItem(_skin_SO);
+        Store.Instance.BuyItem(_skin_SO, this);
+    }
+
+    public void OnEquipButton()
+    {
+        Skin_Manager.Instance.EquipSkin(GetSkisSO);
     }
 
     public Skin_ScriptableObject GetSkisSO
     {
         get { return _skin_SO; }
+    }
+
+    public Button GetPriceButton
+    {
+        get { return _button; }
+        set { _button = value; }
+    }
+    public Button GetEquipButton
+    {
+        get { return _buttonEquip; }
+        set { _buttonEquip = value; }
     }
 }

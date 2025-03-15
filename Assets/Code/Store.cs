@@ -12,8 +12,6 @@ public class Store : MonoBehaviour
     [SerializeField] protected GameObject _prefabInventoryShopItemUI;
     [SerializeField] protected CurrencyManager _currencyManager;
 
-    [SerializeField] protected List<Skin_ScriptableObject> _skins_SO = new List<Skin_ScriptableObject>();
-
     [SerializeField] protected Transform _SkinShopConteiner;
     [SerializeField] protected List<GameObject> _prefabSkinShopItemUI;
 
@@ -82,13 +80,16 @@ public class Store : MonoBehaviour
         ListItemsOnInventoryShop();
     }
 
-    public void BuyItem(Skin_ScriptableObject skin)
+    public void BuyItem(Skin_ScriptableObject skin, ShopSkinStore shopSkinStore)
     {
         if (_currencyManager.CanAfford(skin.skinPrice))
         {
             _currencyManager.SpendCoins(skin.skinPrice);
 
+            shopSkinStore.GetEquipButton.gameObject.SetActive(true);
             Debug.Log("Skin comprada: " + skin.skinName);
+            shopSkinStore.GetPriceButton.gameObject.SetActive(false);
+
             // Podrías, por ejemplo, desactivar el botón:
             // shopSkinUI.DisableBuyButton(); // método que podrías implementar en ShopSkinStore
         }
